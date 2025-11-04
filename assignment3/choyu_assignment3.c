@@ -179,6 +179,10 @@ void process_and_write_files(struct movie *list, const char *onid) {
         perror("Failed to create directory");
         return;
     }
+
+    sprintf(command, "chmod 750 %s", dirName);
+    system(command);
+
     printf("Created directory with name %s\n", dirName);
 
     // Data organization by year
@@ -217,6 +221,9 @@ void process_and_write_files(struct movie *list, const char *onid) {
                 currentTitle = currentTitle->next;
             }
             fclose(outFile);
+
+            sprintf(command, "chmod 640 %s", filePath);
+            system(command);
         }
     }
 
@@ -298,8 +305,9 @@ int main ( int argc, char **argv ){
     srandom(time(NULL)); 
 
     while (top_level_choice != 2) {
-        printf("\n1. Select file to process\n");
+        printf("1. Select file to process\n");
         printf("2. Exit the program\n");
+        printf("\n");
         printf("Enter a choice 1 or 2: ");
 
         if (scanf("%d", &top_level_choice) != 1) {
